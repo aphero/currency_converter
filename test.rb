@@ -42,3 +42,7 @@ d = Currency.new(12, "EUR")
 # puts c.code == d.code
 
 # CODE BLOCK TO TEST ADDITION/SUBTRACTION
+c = a + c
+
+
+puts a + d
