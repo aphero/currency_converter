@@ -1,27 +1,21 @@
 class Currency
+  attr_accessor :amount :code
+
+
   def initialize(amount, code)
     @amount = amount
     @code = code
   end
-end
 
-def validate_code(c)
-  valid = ["USD", "EUR"]
-  valid.include?(c)
-end
+  def amount
+    @amount
+  end
 
-def validate_curr(cu)
-  cu.is_a?(Fixnum)
-end
+  def code
+    @code
+  end
 
-until validate_code(code)
-  puts "Please enter a currency code. (USD or EUR)"
-  code = gets.chomp
+  def +(add)
+    @amount += add
+  end
 end
-
-until validate_curr(curr)
-  puts "Please enter an amount of currency."
-  curr = gets.chomp
-end
-
-banana
