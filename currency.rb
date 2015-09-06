@@ -1,16 +1,32 @@
-class CodeError < StandardError
+require 'bigdecimal'
+require 'bigdecimal/util'
 
+class DifferentCurrencyCodeError < StandardError
 end
 
 class Currency
 
-  def initialize(amount, code)
-    @amount = amount
-    @code = code
+  attr_reader :amount
+  attr_reader :code
+
+  def initialize(*args)
+    if args.length == 2
+      @amount = args[0].to_s.gsub(/[.\D]/,"").to_i
+      @code = args[1]
+      puts "#{@amount.class} #{@amount}"
+    elsif args.length == 1
+      @amount = args.to_s.gsub(/[.\D]/,"").to_i
+      if args.to_s.gsub(/[\[\]".\d]/,"") == "$"
+        @code = "USD"
+      end
+      puts "#{@amount.class} #{@amount}"
+    else
+      raise "Invalid input"
+    end
   end
 
   def amount
-    @amount
+    '%.2f' % (@amount.to_i/100.0)
   end
 
   def code
@@ -19,22 +35,22 @@ class Currency
 
   def +(add)
     if @code == add.code
-      Currency.new(@amount += add.amount, @code)
+      Currency.new(@amount + add.amount, @code)
     else
-        raise CodeError, 'DifferentCurrencyCodeError'
-#      rescue CodeError => e
-#        p e.message
-#        p e.backtrace
-#      end 
+      raise DifferentCurrencyCodeError
     end
   end
 
   def -(sub)
     if @code == sub.code
-      Currency.new(@amount -= sub.amount, @code)
+      Currency.new(@amount - sub.amount, @code)
     else
-      type_error
+      raise DifferentCurrencyCodeError
     end
+  end
+
+  def *(prod)
+      Currency.new(@amount * prod, @code)
   end
 
 end

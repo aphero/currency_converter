@@ -24,11 +24,15 @@ until validate_curr(curr)
   curr = gets.chomp
 end
 =end
-
-a = Currency.new(12, "USD")
-b = Currency.new(12, "USD")
-c = Currency.new(10, "USD")
-d = Currency.new(12, "EUR")
+a = Currency.new(12.34, "USD")
+puts "#{a.amount.class} #{a.amount}"
+puts "#{a.code.class} #{a.code}"
+b = Currency.new("$12.00")
+puts "#{b.amount.class} #{b.amount}"
+puts "#{b.code.class} #{b.code}"
+# puts b.amount.to_d + b.code
+# c = Currency.new(10, "USD")
+# d = Currency.new(12, "EUR")
 # cannot compare objects to each other
 # can only compare individual attributes to get true
 
@@ -41,8 +45,15 @@ d = Currency.new(12, "EUR")
 # puts a.amount == c.amount
 # puts c.code == d.code
 
-# CODE BLOCK TO TEST ADDITION/SUBTRACTION
-c = a + c
+# CODE BLOCK TO TEST ADDITION/SUBTRACTION/PRODUCT
+ # puts a.amount
+ # puts a.code
+# puts b.amount
+# puts b.code
 
-
-puts a + d
+# array = ["apple$10.00", "banana"]
+#
+# narray = array.to_s.gsub(/[.$\d]/,"")
+# puts array
+# puts narray
+# puts array.delete_if { |x| x == "apple"}}
