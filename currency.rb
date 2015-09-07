@@ -1,3 +1,7 @@
+## THINGS TO REMEMBER
+## Output from here is converted to String format
+## Anything coming in is in Integer for calculation accuracy
+
 require 'bigdecimal'
 require 'bigdecimal/util'
 
@@ -10,6 +14,7 @@ class Currency
   attr_reader :code
 
   def initialize(*args)
+    sym_code = { USD: "$", EUR: "€", GBP: "£"}
     if args.length == 2
       @amount = args[0].to_s.gsub(/[.\D]/,"").to_i
       @code = args[1]
@@ -17,7 +22,7 @@ class Currency
     elsif args.length == 1
       @amount = args.to_s.gsub(/[.\D]/,"").to_i
       if args.to_s.gsub(/[\[\]".\d]/,"") == "$"
-        @code = "USD"
+        @code = :USD
       end
       puts "#{@amount.class} #{@amount}"
     else
@@ -26,7 +31,7 @@ class Currency
   end
 
   def amount
-    '%.2f' % (@amount.to_i/100.0)
+    '%0.2f' % (@amount/100.00)
   end
 
   def code
