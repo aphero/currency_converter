@@ -37,7 +37,7 @@ class Currency
     if @code == add.code
       Currency.new(@amount + add.amount, @code)
     else
-      raise DifferentCurrencyCodeError
+      raise DifferentCurrencyCodeError, "You're trying to mix it up I see."
     end
   end
 
@@ -45,7 +45,7 @@ class Currency
     if @code == sub.code
       Currency.new(@amount - sub.amount, @code)
     else
-      raise DifferentCurrencyCodeError
+      raise DifferentCurrencyCodeError, "Are you Sir Mixalot?"
     end
   end
 
