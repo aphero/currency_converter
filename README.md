@@ -13,7 +13,7 @@ CurrencyConverter objects:
 
 -- Should be initialized with a Hash of currency codes to conversion rates (see link to rates below)
 
-At first, just make this work with two currency codes and conversation rates, with one rate being 1.0 and the other being the conversation rate. An example would be this: {USD: 1.0, EUR: 0.74}, which implies that a dollar is worth 0.74 euros.
+-- At first, just make this work with two currency codes and conversation rates, with one rate being 1.0 and the other being the conversation rate. An example would be this: {USD: 1.0, EUR: 0.74}, which implies that a dollar is worth 0.74 euros.
 
 Should be able to take a Currency object and a requested currency code that is the same currency code as the Currency object's and return a Currency object equal to the one passed in (that is, currency_converter.convert(Currency.new(1, :USD), :USD) == Currency.new(1, :USD))
 
@@ -24,3 +24,6 @@ Should be able to be created with a Hash of three or more currency codes and con
 Should be able to convert Currency in any currency code it knows about to Currency in any other currency code it knows about.
 
 Should raise an UnknownCurrencyCodeError when you try to convert from or to a currency code it doesn't know about.
+
+
+Tried to use BigDecimal or Integer for running calculations to avoid the errors that Float inherently has as well as preserving origin integrity, but ultimately fell back on Float in order to at least get the program working.  Given more time I would go back and attempt to accomplish the same with the more accurate class types.  This issue took up a lot of my time over the weekend with the project.  Obviously I need to study up more on how to properly convert between class types.

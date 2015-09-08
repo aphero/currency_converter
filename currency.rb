@@ -1,9 +1,7 @@
 ## THINGS TO REMEMBER
 ## Output from here is converted to String format
 ## Anything coming in is in Integer for calculation accuracy
-
-require 'bigdecimal'
-require 'bigdecimal/util'
+require './currency_converter'
 
 class DifferentCurrencyCodeError < StandardError
 end
@@ -15,23 +13,20 @@ class Currency
 
   def initialize(*args)
     sym_code = { USD: "$", EUR: "€", GBP: "£"}
+    sym_code2 = { "$" => :USD, "€" => :EUR, "£" => :GBP }
     if args.length == 2
-      @amount = args[0].to_s.gsub(/[.\D]/,"").to_i
-      @code = args[1]
-      puts "#{@amount.class} #{@amount}"
+      @amount = args[0].to_s.gsub(/\$€£/,"").to_f
+      @code = args[1].to_sym
     elsif args.length == 1
-      @amount = args.to_s.gsub(/[.\D]/,"").to_i
-      if args.to_s.gsub(/[\[\]".\d]/,"") == "$"
-        @code = :USD
-      end
-      puts "#{@amount.class} #{@amount}"
+      @amount = args.to_s.gsub(/[\[\]"\$€£]/,"").to_f
+      @code = sym_code2[args.to_s.gsub(/[\[\]".\d]/,"")]
     else
       raise "Invalid input"
     end
   end
 
   def amount
-    '%0.2f' % (@amount/100.00)
+    @amount
   end
 
   def code
@@ -56,6 +51,12 @@ class Currency
 
   def *(prod)
       Currency.new(@amount * prod, @code)
+  end
+
+  def ==(value)
+    if @amount == (value.amount) && @code == (value.code)
+      true
+    end
   end
 
 end
